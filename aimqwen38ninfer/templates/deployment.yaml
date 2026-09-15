@@ -76,7 +76,7 @@ spec:
             mkdir -p "$SHARED_DIR"
             HF_AUTH=""
             if [ -n "$HF_TOKEN" ]; then HF_AUTH="-H \"Authorization: Bearer $HF_TOKEN\""; fi
-            if [ ! -s "$SHARED_DIR/$MODEL_FILE.ok" ]; then
+            if [ ! -f "$SHARED_DIR/$MODEL_FILE.ok" ]; then
               echo "==> Downloading $MODEL_FILE (~22 GB, single stream, resumable)"
               eval curl -fL -C - --retry 30 --retry-delay 15 --retry-all-errors --connect-timeout 30 $HF_AUTH \
                 "$MODEL_URL" -o "$SHARED_DIR/$MODEL_FILE"

@@ -1,7 +1,7 @@
 apiVersion: v2
 icon: https://app.cdn.olares.com/appstore/llamacpp/icon2.png
-appVersion: 26.9.1
+appVersion: 26.9.2
 description: Qwen3.8-27B via NInfer (sm_120a C++/CUDA) — NVFP4, 100K context, MTP speculation
 name: aimqwen38ninfer
 type: application
-version: 26.9.1
+version: 26.9.2

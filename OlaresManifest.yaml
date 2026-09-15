@@ -11,7 +11,7 @@ metadata:
   description: Qwen3.8-27B Vision via NInfer
   appid: aimqwen38ninfer
   title: AIM Qwen3.8 27B-N
-  version: '26.9.1'
+  version: '26.9.2'
   categories:
     - AI
     - Vision
@@ -26,7 +26,7 @@ entrances:
     authLevel: internal
 
 spec:
-  versionName: '26.9.1'
+  versionName: '26.9.2'
   fullDescription: |
     AIM Qwen3.8 27B-N serves Qwen3.8-27B with the NInfer C++/CUDA inference engine, purpose-built for a single NVIDIA GeForce RTX 5090 (sm_120a).
 
@@ -45,6 +45,7 @@ spec:
     **Resource Usage**
     One RTX 5090 (24 GB) exclusively, ~20 GiB VRAM for weights, ~4 GB host RAM pinned for state caches.
   upgradeDescription: |
+    26.9.2: Fixed the model-presence check ([-f] instead of [-s]) so the zero-byte .ok marker correctly skips the download step on restart. Built for Olares 1.12.6.
     26.9.1: First release of AIM Qwen3.8 27B-N. NInfer (upstream, sm_120a, CUDA 13.1) + Qwen3.8-27B NVFP4 artifact, NVFP4 KV, 103,936-token context, MTP3 + proposal head, preserve-thinking. Built for Olares 1.12.6.
   developer: Aimighty
   website: https://github.com/bayerhazard/aimighty-llmqwen38ninfer
