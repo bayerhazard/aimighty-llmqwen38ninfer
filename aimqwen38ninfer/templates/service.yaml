@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: aimqwen38ninfer
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: aimqwen38ninfer
+    io.kompose.service: aimqwen38ninfer
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+  - name: "8080"
+    port: {{ .Values.service.port }}
+    targetPort: {{ .Values.service.port }}
+    protocol: TCP
+  selector:
+    io.kompose.service: aimqwen38ninfer

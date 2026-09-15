@@ -1,0 +1,76 @@
+workloads:
+  aimqwen38ninfer:
+    replicaCount: 1
+
+image:
+  repository: ghcr.io/bayerhazard/ninfer
+  tag: cde57e48
+  full: ghcr.io/bayerhazard/ninfer:cde57e48
+  pullPolicy: IfNotPresent
+
+nameOverride: ""
+fullnameOverride: aimqwen38ninfer
+
+service:
+  type: ClusterIP
+  port: 8080
+
+resources:
+  limits:
+    cpu: 16
+    memory: 40Gi
+    nvidia.com/gpu: 1
+  requests:
+    cpu: 4
+    memory: 24Gi
+    nvidia.com/gpu: 1
+
+env:
+  MODEL_FILE: "qwen3_8_27b_nvfp4.ninfer"
+  MODEL_URL: "https://huggingface.co/neroued/Qwen3.8-27B-nvfp4-NInfer/resolve/main/qwen3_8_27b_nvfp4.ninfer"
+  MODEL_ALIAS: "qwen3.8-27b"
+  MAX_CONTEXT: "103936"
+  KV_DTYPE: "nvfp4"
+  MAX_CONCURRENCY: "1"
+  MAX_PENDING: "16"
+  PENDING_TIMEOUT_MS: "600000"
+  PREFILL_CHUNK: "1024"
+  MAX_REQUEST_MIB: "1024"
+  HOST_STATE_SLOTS: "16"
+  SPEC: "mtp"
+  DRAFT_TOKENS: "3"
+  THINKING_BUDGET: "2048"
+
+# Olares-injected environment variables (from OlaresManifest envs:).
+# Default present so standalone `helm template` renders without nil pointer;
+# Olares overrides this at install time.
+olaresEnv:
+  HF_TOKEN: ""
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+persistence:
+  models:
+    enabled: true
+    size: 50Gi
+  shared:
+    enabled: true
+    size: 200Gi
+
+probes:
+  startup:
+    path: /health
+    port: 8080
+    failureThreshold: 720
+    periodSeconds: 30
+    initialDelaySeconds: 60
+    timeoutSeconds: 10
+  liveness:
+    path: /health
+    port: 8080
+    failureThreshold: 5
+    periodSeconds: 30
+    initialDelaySeconds: 600
+    timeoutSeconds: 10
